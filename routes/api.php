@@ -15,8 +15,10 @@ Route::get('/user', function (Request $request) {
  * DELETE /products/:id
  */
 
-Route::get('/products', [\App\Http\Controllers\Api\ProductController::class, 'index']);
-Route::get('/products/{product}', [\App\Http\Controllers\Api\ProductController::class, 'show']);
-Route::post('/products', [\App\Http\Controllers\Api\ProductController::class, 'store']);
-Route::match(['put', 'patch'], '/products/{product}', [\App\Http\Controllers\Api\ProductController::class, 'update']);
-Route::delete('/products/{product}', [\App\Http\Controllers\Api\ProductController::class, 'destroy']);
+Route::controller(\App\Http\Controllers\Api\ProductController::class)->group(function () {
+    Route::get('/products', 'index');
+    Route::get('/products/{product}', 'show');
+    Route::post('/products', 'store');
+    Route::match(['put', 'patch'], '/products/{product}', 'update');
+    Route::delete('/products/{product}', 'destroy');
+});
