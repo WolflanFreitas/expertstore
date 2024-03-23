@@ -8,11 +8,15 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 /**
- * GET /PRODUCTS
- * GET /PRODUCTS/:id
- * POST /PRODUCTS
- * PUT/PATCH /PRODUCTS/:id
+ * GET /products
+ * GET /products/:id
+ * POST /products
+ * PUT/PATCH /products/:id
  * DELETE /products/:id
  */
 
-Route::get('/hello', fn () => 'Hello Api');
+Route::get('/products', [\App\Http\Controllers\Api\ProductController::class, 'index']);
+Route::get('/products/{product}', [\App\Http\Controllers\Api\ProductController::class, 'show']);
+Route::post('/products', [\App\Http\Controllers\Api\ProductController::class, 'store']);
+Route::match(['put', 'patch'], '/products/{product}', [\App\Http\Controllers\Api\ProductController::class, 'update']);
+Route::delete('/products/{product}', [\App\Http\Controllers\Api\ProductController::class, 'destroy']);
